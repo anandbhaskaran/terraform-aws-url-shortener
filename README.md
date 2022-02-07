@@ -1,10 +1,12 @@
 This module will create two endpoints in the API GATEWAY.
 
 # How to use it?
+```
 module "url-shortener" {
   source  = "anandbhaskaran/url-shortener/aws"
   version = "1.0.0"
 }
+```
 
 # Create a new short url
 POST endpoint-url/short
