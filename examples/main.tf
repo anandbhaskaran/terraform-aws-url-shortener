@@ -2,7 +2,7 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-module "url-shortener" {
+module "url_shortener" {
   source  = "anandbhaskaran/url-shortener/aws"
-  version = "1.0.0"
+  version = "1.2.0"
 }
