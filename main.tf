@@ -105,6 +105,9 @@ module "error-responses-positions" {
   api_gateway_id = aws_api_gateway_rest_api.url_shortner.id
   resource_id = aws_api_gateway_resource.short.id
   http_method = aws_api_gateway_method.short_post.http_method
+  depends_on = [
+    aws_api_gateway_integration.short_post_ireq
+  ]
 }
 
 #------------------------------------------------
