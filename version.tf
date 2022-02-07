@@ -6,7 +6,3 @@ terraform {
     null = "~> 2.0"
   }
 }
-
-provider "aws" {
-  region = "eu-west-1"
-}

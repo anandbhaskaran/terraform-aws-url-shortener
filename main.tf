@@ -42,7 +42,7 @@ resource "aws_api_gateway_integration" "short_post_ireq" {
   request_templates = {
     "application/json" = <<EOF
     {
-      "TableName": "short-url",
+      "TableName": "${var.dynamo_table_name}",
       "ConditionExpression": "attribute_not_exists(slug)",
       "Key": {
         "slug": {
@@ -77,7 +77,7 @@ resource "aws_api_gateway_method_response" "response_200" {
 }
 
 # integration response for post method in app resource
-resource "aws_api_gateway_integration_response" "short_post-ires" {
+resource "aws_api_gateway_integration_response" "short_post_ires" {
   rest_api_id = aws_api_gateway_rest_api.url_shortner.id
   resource_id = aws_api_gateway_resource.short.id
   http_method = aws_api_gateway_method.short_post.http_method
@@ -94,6 +94,10 @@ resource "aws_api_gateway_integration_response" "short_post-ires" {
     }
 EOF
   }
+
+  depends_on = [
+    aws_api_gateway_integration.short_post_ireq
+  ]
 }
 
 module "error-responses-positions" {
@@ -123,7 +127,7 @@ resource "aws_api_gateway_method" "slug-post" {
 }
 
 # integration request to accept key in header
-resource "aws_api_gateway_integration" "slug-post-ireq" {
+resource "aws_api_gateway_integration" "slug_post_ireq" {
   rest_api_id             = aws_api_gateway_rest_api.url_shortner.id
   resource_id             = aws_api_gateway_resource.slug.id
   http_method             = aws_api_gateway_method.slug-post.http_method
@@ -143,7 +147,7 @@ resource "aws_api_gateway_integration" "slug-post-ireq" {
       "S": "$util.escapeJavaScript($input.params().path.slug)"
     }
   },
-  "TableName": "short-url"
+  "TableName": "${var.dynamo_table_name}"
 }
 
 EOF
@@ -160,7 +164,7 @@ resource "aws_api_gateway_method_response" "response_301" {
 }
 
 # integration response for query
-resource "aws_api_gateway_integration_response" "slug-post-ires" {
+resource "aws_api_gateway_integration_response" "slug_post_ires" {
   rest_api_id = aws_api_gateway_rest_api.url_shortner.id
   resource_id = aws_api_gateway_resource.slug.id
   http_method = aws_api_gateway_method.slug-post.http_method
@@ -175,11 +179,15 @@ resource "aws_api_gateway_integration_response" "slug-post-ires" {
 #end
 EOF
   }
+
+  depends_on = [
+    aws_api_gateway_integration.slug_post_ireq
+  ]
 }
 
 # deplyoing the API to prod stage
 resource "aws_api_gateway_deployment" "prod-api" {
-  depends_on = [aws_api_gateway_integration.slug-post-ireq]
+  depends_on = [aws_api_gateway_integration.slug_post_ireq]
 
   rest_api_id = aws_api_gateway_rest_api.url_shortner.id
   stage_name  = var.api_gateway_stage_name
