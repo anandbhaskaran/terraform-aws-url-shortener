@@ -4,7 +4,7 @@ This module will create two endpoints in the API GATEWAY.
 ```
 module "url-shortener" {
   source  = "anandbhaskaran/url-shortener/aws"
-  version = "1.0.0"
+  version = "1.3.2"
 }
 ```
 

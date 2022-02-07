@@ -4,5 +4,5 @@ provider "aws" {
 
 module "url_shortener" {
   source  = "anandbhaskaran/url-shortener/aws"
-  version = "1.3.0"
+  version = "1.3.2"
 }
