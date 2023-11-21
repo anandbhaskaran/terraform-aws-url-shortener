@@ -3,6 +3,5 @@ terraform {
 
   required_providers {
     aws  = ">= 3.6"
-    null = "~> 2.0"
   }
 }
