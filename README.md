@@ -22,3 +22,5 @@ Body:
 # Use a short url
 GET endpoint-url/{slug}
 You will be redirected to this page
+
+[Simplified Tutorial](https://anandb3.medium.com/create-your-own-url-shortener-in-less-than-5-minutes-c3db7ca14fa8)
